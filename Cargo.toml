@@ -1,0 +1,15 @@
+[package]
+name = "asset-allocation"
+description = "Asset Allocation calculation"
+version = "0.1.0"
+edition = "2021"
+authors = ['Alen Šiljak <dev@alensiljak.eu.org>']
+repository = 'https://github.com/alensiljak/asset-allocation'
+license="AGPL-3.0"
+readme = "README.md"
+categories = ["finance"]
+keywords = ["library", "finance"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
