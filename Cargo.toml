@@ -13,3 +13,5 @@ keywords = ["library", "finance"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+serde = "1.0.167"
+toml = "0.7.6"
