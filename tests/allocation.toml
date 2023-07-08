@@ -1,0 +1,27 @@
+#
+# This is the template file for the asset allocation settings.
+#
+[Allocation]
+allocation = 100
+
+[Allocation.Equity]
+allocation = 60
+
+[Allocation.Equity.Local]
+allocation = 30
+symbols = ["ABC"]
+
+[Allocation.Equity.International]
+allocation = 30
+symbols = ["DEF", "DEF2"]
+
+[Allocation.Fixed]
+allocation = 40
+
+[Allocation.Fixed.Local]
+allocation = 20
+symbols = ["BOND"]
+
+[Allocation.Fixed.International]
+allocation = 20
+symbols = ["IBOND"]
