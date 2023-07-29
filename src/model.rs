@@ -2,14 +2,13 @@
  * Definitions of the structures
  */
 
-
-
 #[derive(Debug)]
 pub struct AssetClassDefinition {
     pub allocation: u8,
     pub symbols: Vec<String>
 }
 
+#[derive(Debug)]
 pub struct AssetClass {
   pub fullname: String,
   pub allocation: u8,
