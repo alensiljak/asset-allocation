@@ -1,0 +1,83 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in library 'asset-allocation'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--lib",
+                    "--package=asset-allocation"
+                ],
+                "filter": {
+                    "name": "asset-allocation",
+                    "kind": "lib"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'asset-allocation'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=asset-allocation",
+                    "--package=asset-allocation"
+                ],
+                "filter": {
+                    "name": "asset-allocation",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'asset-allocation'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=asset-allocation",
+                    "--package=asset-allocation"
+                ],
+                "filter": {
+                    "name": "asset-allocation",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug integration test 'generic-tests'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--test=generic-tests",
+                    "--package=asset-allocation"
+                ],
+                "filter": {
+                    "name": "generic-tests",
+                    "kind": "test"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        }
+    ]
+}

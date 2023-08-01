@@ -5,11 +5,13 @@
 pub mod engine;
 pub mod model;
 
-use toml::Table;
+use toml::{Table, Value};
 
-pub fn first() {}
+#[cfg(target_arch = "wasm32")]
+use wasm_bindgen::prelude::*;
 
-pub fn importTomlDefinition(definition: String) {
+#[cfg_attr(target_arch = "wasm32", wasm_bindgen)]
+pub fn setDefinition(definition: String) {
     let parsed = definition
         .parse::<Table>()
         .expect("parsed asset allocation definition");
@@ -24,7 +26,8 @@ fn linearizeDefinition(definition: Table) {
 
     println!("definition: {:?}", definition);
 
-    let allocation = definition.get("Allocation").unwrap();
+    let allocation: &Value = definition.get("Allocation").unwrap();
+    println!("allocation: {:?}", allocation);
 
     // for (name, property) in allocation {
     //     // property = (name, Table)
@@ -36,14 +39,15 @@ fn linearizeDefinition(definition: Table) {
 mod tests {
     use std::fs::{self};
 
-    use crate::importTomlDefinition;
+    use crate::setDefinition;
 
     #[test]
     fn test_import() {
         let contents = fs::read_to_string("tests/allocation.toml").expect("AA file read");
 
-        importTomlDefinition(contents);
+        setDefinition(contents);
 
         // Assert
+        todo!()
     }
 }
