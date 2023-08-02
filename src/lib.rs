@@ -6,7 +6,7 @@ pub mod engine;
 pub mod model;
 
 use model::AssetClass;
-use toml::{Table, Value};
+use toml::{value::Array, Table, Value};
 
 #[cfg(target_arch = "wasm32")]
 use wasm_bindgen::prelude::*;
@@ -23,17 +23,17 @@ pub fn loadDefinition(definition: String) -> Vec<AssetClass> {
 
     // let result = await this.validateAndSave(assetClasses)
 
-    todo!()
+    asset_classes
 }
 
 fn linearizeDefinition(root: &Table) -> Vec<AssetClass> {
     let mut result: Vec<AssetClass> = vec![];
 
-    // process only the children.
+    // process the children.
     for (key, value) in root {
         if value.is_table() {
             // add the root class
-            let ac = get_asset_class_from_toml(key, value);
+            let ac = get_asset_class_from_toml(key, value.as_table().unwrap());
             result.push(ac);
 
             // add to the list
@@ -47,14 +47,25 @@ fn linearizeDefinition(root: &Table) -> Vec<AssetClass> {
     result
 }
 
-fn get_asset_class_from_toml(name: &String, value: &Value) -> AssetClass {
+fn get_asset_class_from_toml(name: &String, value: &Table) -> AssetClass {
     let mut ac = AssetClass::new();
     ac.fullname = name.to_owned();
 
     // get the allocation
-    let node = &value["allocation"];
-    let node_value = node.as_integer().unwrap();
-    ac.allocation = node_value as u8;
+    let mut node = &value["allocation"];
+    let allocation = node.as_integer().unwrap();
+    ac.allocation = allocation as u8;
+
+    // symbols
+    if value.contains_key("symbols") {
+        node = &value["symbols"];
+        if let Some(symbols) = node.as_array() {
+            // Symbols are Strings
+            for symbol_val in symbols {
+                ac.symbols.push(symbol_val.to_string());
+            }
+        }
+    }
 
     ac
 }
@@ -69,9 +80,9 @@ mod tests {
     fn test_import() {
         let contents = fs::read_to_string("tests/allocation.toml").expect("AA file read");
 
-        loadDefinition(contents);
+        let allocation = loadDefinition(contents);
 
         // Assert
-        todo!()
+        assert_eq!(7, allocation.len());
     }
 }
