@@ -2,13 +2,13 @@
  * Definitions of the structures
  */
 
-#[derive(Debug)]
+#[derive(Debug, Default)]
 pub struct AssetClassDefinition {
     pub allocation: u8,
     pub symbols: Vec<String>
 }
 
-#[derive(Debug)]
+#[derive(Debug, Default)]
 pub struct AssetClass {
   pub fullname: String,
   pub allocation: u8,
@@ -20,4 +20,24 @@ pub struct AssetClass {
   pub diff_perc: u8,
   pub currency: String,
   pub symbols: Vec<String>,
+}
+
+impl AssetClass {
+  pub fn new() -> Self {
+    AssetClass::default()
+  }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::AssetClass;
+
+  #[test]
+  fn test_default() {
+    let item = AssetClass::new();
+
+    assert_eq!("".to_string(), item.fullname);
+    assert_eq!(0, item.diff);
+    assert_eq!(0, item.symbols.len());
+  }
 }

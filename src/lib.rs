@@ -5,24 +5,29 @@
 pub mod engine;
 pub mod model;
 
+use model::AssetClass;
 use toml::{Table, Value};
 
 #[cfg(target_arch = "wasm32")]
 use wasm_bindgen::prelude::*;
 
 #[cfg_attr(target_arch = "wasm32", wasm_bindgen)]
-pub fn setDefinition(definition: String) {
-    let parsed = definition
+pub fn loadDefinition(definition: String) -> Vec<AssetClass> {
+    let allocation = definition
         .parse::<Table>()
         .expect("parsed asset allocation definition");
 
     // println!("{:?}", parsed);
 
-    let asset_classes = linearizeDefinition(parsed);
+    let asset_classes = linearizeDefinition(allocation);
+
+    // let result = await this.validateAndSave(assetClasses)
+
+    todo!()
 }
 
 fn linearizeDefinition(definition: Table) {
-    // let result = vec![];
+    let result: Vec<AssetClass> = vec![];
 
     println!("definition: {:?}", definition);
 
@@ -39,13 +44,13 @@ fn linearizeDefinition(definition: Table) {
 mod tests {
     use std::fs::{self};
 
-    use crate::setDefinition;
+    use crate::loadDefinition;
 
     #[test]
     fn test_import() {
         let contents = fs::read_to_string("tests/allocation.toml").expect("AA file read");
 
-        setDefinition(contents);
+        loadDefinition(contents);
 
         // Assert
         todo!()
