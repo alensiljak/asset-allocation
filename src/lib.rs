@@ -27,17 +27,34 @@ pub fn loadDefinition(definition: String) -> Vec<AssetClass> {
 }
 
 fn linearizeDefinition(definition: Table) {
-    let result: Vec<AssetClass> = vec![];
+    let mut result: Vec<AssetClass> = vec![];
 
     println!("definition: {:?}", definition);
 
-    let allocation: &Value = definition.get("Allocation").unwrap();
+    let allocation = definition.get("Allocation").unwrap().as_table().unwrap();
     println!("allocation: {:?}", allocation);
 
-    // for (name, property) in allocation {
-    //     // property = (name, Table)
-    //     println!("property: {:?} {:?}", name, property);
-    // }
+    for (name, property) in allocation {
+        if property.is_table() {
+            // todo: add to the list
+            // get_linear_asset_classes(property.as_table());
+        } else {
+            let mut ac = AssetClass::new();
+            ac.fullname = name.to_owned();
+            ac.allocation = property.as_integer().unwrap() as u8;
+
+            println!("added: {:?}", ac);
+
+            result.push(ac);
+        }
+    }
+}
+
+fn get_linear_asset_classes(root: Table) {
+    // return only the children
+    for (key, value) in root {
+        println!("{:?} {:?}", key, value);
+    }
 }
 
 #[cfg(test)]
